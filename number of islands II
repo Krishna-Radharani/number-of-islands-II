@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+ void dfs(vector<vector<int>>& grid,int i,int j,vector<vector<bool>>&visited){
+    if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || visited[i][j] || grid[i][j]==0){
+        return ;
+    }
+    visited[i][j]=true;
+        dfs(grid,i-1,j,visited); // up
+        dfs(grid,i+1,j,visited);//down
+        dfs(grid,i,j-1,visited);//left
+        dfs(grid,i,j+1,visited);//right
+    
+  }
+
+
+
+vector<int> numberOfIslandII(int n, int m, vector<vector<int>>& queries, int q)
+{
+    // Write your code here.
+    vector<vector<int>>grid(n,vector<int>(m,0));
+    vector<int>ans;
+    if(grid.empty()){
+            return ans;
+        }
+        for (int k = 0; k < q; ++k) {
+            int x = queries[k][0];
+            int y = queries[k][1];
+
+            // Update grid with the current query
+            grid[x][y] = 1;
+        // Count the number of islands
+        vector<vector<bool>> visited(n, vector<bool>(m, false));
+        int cnt = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+              if (!visited[i][j] && grid[i][j] == 1) {
+                dfs(grid, i, j, visited);
+                cnt++;
+              }
+            }
+        }
+        ans.push_back(cnt);
+        }
+        return ans;
+}
